@@ -6,8 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu-13.04"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.box = "ubuntu-13.04"
+  #config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
+  
+  config.vm.box = 'centos-6-amd64'
+  config.vm.box_url = 'https://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140504.box'
+  config.vm.provision "shell", inline: "sudo service iptables stop"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -27,19 +31,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Default value: false
   # config.ssh.forward_agent = true
 
-  # config.vm.provider :virtualbox do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.vm.provision "shell", inline: "sudo locale-gen en_US.UTF-8"
-
+  #config.vm.provision "shell", inline: "sudo locale-gen en_US.UTF-8"
   config.vm.provision "ansible" do |ansible|
     ansible.limit = 'all' #https://github.com/mitchellh/vagrant/issues/3096
     ansible.playbook = "playbook.yml"
