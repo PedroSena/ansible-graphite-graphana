@@ -1,3 +1,5 @@
+NameVirtualHost *:80
+
 <IfModule !wsgi_module.c>
     LoadModule wsgi_module modules/mod_wsgi.so
 </IfModule>
@@ -14,6 +16,11 @@ Listen {{ graphite_apache_port }}
         DocumentRoot "/opt/graphite/webapp"
         ErrorLog /opt/graphite/storage/log/webapp/error.log
         CustomLog /opt/graphite/storage/log/webapp/access.log common
+
+        Header set Access-Control-Allow-Origin "http://{{ grafana_vhost_server_name }}"
+        Header set Access-Control-Allow-Methods "GET,OPTIONS"
+        Header set Access-Control-Allow-Headers "origin, authorization, accept"
+
         # I've found that an equal number of processes & threads tends
         # to show the best performance for Graphite (ymmv).
         WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120

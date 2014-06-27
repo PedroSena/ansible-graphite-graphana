@@ -8,7 +8,7 @@ function (Settings) {
     datasources: {
       graphite: {
         type: 'graphite',
-        url: "{{ graphite_vhost }}",
+        url: "http://{{ graphite_vhost }}",
         default: true
       }
     },

@@ -42,3 +42,4 @@
     - roles/apache
     - roles/graphite
     - roles/grafana
+    - roles/elasticsearch
